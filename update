@@ -2,46 +2,23 @@
 
 set -e
 
-tmp=$(mktemp -t freemailXXX)
-cat ./data/blacklist.txt \
-    | sed '/./,$!d' \
-    | sed -e 's/^ *//' -e 's/ *$//' \
-    | awk '{print tolower($0)}' \
-    | sort \
-    | uniq > $tmp
-mv $tmp ./data/blacklist.txt
-
-tmp=$(mktemp -t freemailXXX)
-cat ./data/free.txt \
-    | sed '/./,$!d' \
-    | sed -e 's/^ *//' -e 's/ *$//' \
-    | awk '{print tolower($0)}' \
-    | sort \
-    | uniq \
-    | comm -23 - ./data/blacklist.txt > $tmp
-mv $tmp ./data/free.txt
+curl --silent https://raw.githubusercontent.com/ivolo/disposable-email-domains/master/index.json | jq -r .[] > ./data/disposable.txt
+curl --silent https://raw.githubusercontent.com/ivolo/disposable-email-domains/master/wildcard.json | jq -r .[] >> ./data/disposable.txt
 
 tmp=$(mktemp -t freemailXXX)
 cat ./data/disposable.txt \
-    | sed '/./,$!d' \
-    | sed -e 's/^ *//' -e 's/ *$//' \
-    | awk '{print tolower($0)}' \
     | sort \
-    | uniq \
-    | comm -23 - ./data/blacklist.txt \
-    | comm -23 - ./data/free.txt > $tmp
+    | uniq > $tmp
 mv $tmp ./data/disposable.txt
 
 sources=$(cat ./data/sources.txt)
-new=$(mktemp -t freemailXXX)
+new_free=$(mktemp -t freemailXXX)
 for source in $sources; do
-    echo "$(curl --silent $source)" >> $new
+    echo "$(curl --silent $source)" >> $new_free
 done;
 
-curl --silent https://raw.githubusercontent.com/ivolo/disposable-email-domains/master/index.json | jq -r .[] >> $new
-
-tmp=$(mktemp -t freemailXXX)
-cat $new \
+deduped=$(mktemp -t freemailXXX)
+cat $new_free \
     | sed '/./,$!d' \
     | sed -e 's/^ *//' -e 's/ *$//' \
     | awk '{print tolower($0)}' \
@@ -49,18 +26,22 @@ cat $new \
     | uniq \
     | comm -23 - ./data/blacklist.txt \
     | comm -23 - ./data/free.txt \
-    | comm -23 - ./data/disposable.txt > $tmp
+    | comm -23 - ./data/disposable.txt > $deduped
 
-confirmed=$(mktemp -t freemailXXX)
-for domain in $(cat $tmp); do
-    result=`dig +short mx $domain`
-    if [ -n "$result" ]; then
-        echo $domain >> $confirmed
-    fi
-done
+# NOTE: Checking DNS records is pretty slow. Having dead domains doesn't seem
+# like that bad of an issue.
+
+# confirmed=$(mktemp -t freemailXXX)
+# for domain in $(cat $deduped); do
+#     echo "Checking $domain"
+#     result=`dig +short mx $domain`
+#     if [ -n "$result" ]; then
+#         echo $domain >> $confirmed
+#     fi
+# done
 
 tmp=$(mktemp -t freemailXXX)
-cat $confirmed ./data/free.txt \
+cat $deduped ./data/free.txt \
     | sort \
     | uniq > $tmp
 mv $tmp ./data/free.txt
