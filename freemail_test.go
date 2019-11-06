@@ -28,8 +28,8 @@ func TestIsFree(t *testing.T) {
 	if !IsFree("gmail.com") {
 		t.Errorf("expected 'gmail.com' to be free")
 	}
-	if IsFree("range.co") {
-		t.Errorf("expected 'range.co' not to be free")
+	if IsFree("google.com") {
+		t.Errorf("expected 'google.com' not to be free")
 	}
 }
 
@@ -37,7 +37,16 @@ func TestIsDisposable(t *testing.T) {
 	if !IsDisposable("mailinator.com") {
 		t.Errorf("expected 'mailinator.com' to be disposable")
 	}
-	if IsDisposable("range.co") {
-		t.Errorf("expected 'range.co' not to be disposable")
+	if IsDisposable("google.com") {
+		t.Errorf("expected 'google.com' not to be disposable")
+	}
+}
+
+func TestIsSpammy(t *testing.T) {
+	if !IsSpammy("aribeth.ru") {
+		t.Errorf("expected 'aribeth.ru' to be spammy")
+	}
+	if IsSpammy("google.com") {
+		t.Errorf("expected 'google.com' not to be disposable")
 	}
 }
