@@ -11,6 +11,15 @@ cat ./data/disposable.txt \
     | uniq > $tmp
 mv $tmp ./data/disposable.txt
 
+curl --silent https://www.stopforumspam.com/downloads/toxic_domains_whole.txt > ./data/spammy.txt
+
+tmp=$(mktemp -t freemailXXX)
+cat ./data/spammy.txt \
+    | sed "s/^[^[:alnum:]]//g" \
+    | sort \
+    | uniq > $tmp
+mv $tmp ./data/spammy.txt
+
 sources=$(cat ./data/sources.txt)
 new_free=$(mktemp -t freemailXXX)
 for source in $sources; do
@@ -21,12 +30,13 @@ deduped=$(mktemp -t freemailXXX)
 cat $new_free \
     | sed '/./,$!d' \
     | sed -e 's/^ *//' -e 's/ *$//' \
+    | sed "s/^[^[:alnum:]]//g" \
     | awk '{print tolower($0)}' \
     | sort \
     | uniq \
-    | comm -23 - ./data/blacklist.txt \
     | comm -23 - ./data/free.txt \
-    | comm -23 - ./data/disposable.txt > $deduped
+    | comm -23 - ./data/disposable.txt \
+    | comm -23 - ./data/spammy.txt > $deduped
 
 # NOTE: Checking DNS records is pretty slow. Having dead domains doesn't seem
 # like that bad of an issue.

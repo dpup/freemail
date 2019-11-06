@@ -1,6 +1,6 @@
 // +build ignore
 
-// This program generates free.go and disposable.go.
+// This program generates free.go, disposable.go, and spammy.go
 // It can be invoked by running go generate
 package main
 
@@ -14,6 +14,7 @@ import (
 func main() {
 	writeFile("free", readFile("free.txt"))
 	writeFile("disposable", readFile("disposable.txt"))
+	writeFile("spammy", readFile("spammy.txt"))
 }
 
 func readFile(name string) []string {

@@ -18,6 +18,12 @@ func IsDisposable(domain string) bool {
 	return find(domain, disposable)
 }
 
+// IsSpammy returns true if the email domain is known to be a source of spammy
+// and abusive behavior, per Stop Forum Spam.
+func IsSpammy(domain string) bool {
+	return find(domain, spammy)
+}
+
 func find(domain string, domains map[string]bool) bool {
 	if domains[domain] {
 		return true
