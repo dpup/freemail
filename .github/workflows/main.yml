@@ -1,0 +1,19 @@
+name: Update Lists
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Execute Update
+      run: ./update
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: auto update
+        title: Auto update
+        body: This is an auto-generated PR with updates from source lists.
+        branch: auto-lists
