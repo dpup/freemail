@@ -9,6 +9,10 @@ jobs:
     - uses: actions/checkout@v2
     - name: Execute Update
       run: ./update
+    - name: Setup Go
+      uses: actions/setup-go@v1
+    - name: Regenerate go files
+      run: go generate
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v2
       with:
