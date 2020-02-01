@@ -20,4 +20,3 @@ jobs:
         commit-message: auto update
         title: Auto update
         body: This is an auto-generated PR with updates from source lists.
-        branch: auto-lists
