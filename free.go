@@ -1116,6 +1116,7 @@ var free = map[string]bool{
 	"herediano.com":                  true,
 	"heremail.com":                   true,
 	"herono1.com":                    true,
+	"hey.com":                        true,
 	"hey.to":                         true,
 	"hhdevel.com":                    true,
 	"hhh.sytes.net":                  true,
