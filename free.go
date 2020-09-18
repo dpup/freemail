@@ -3129,6 +3129,7 @@ var free = map[string]bool{
 	"partlycloudy.com":               true,
 	"partynight.at":                  true,
 	"parvazi.com":                    true,
+	"passport.com":                   true,
 	"password.nafko.cf":              true,
 	"passwordmail.com":               true,
 	"pathfindermail.com":             true,
