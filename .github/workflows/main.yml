@@ -1,22 +1,23 @@
 name: Update Lists
 on:
   schedule:
-    - cron: '0 0 * * 1'
+    - cron: "0 0 * * 1"
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Execute Update
-      run: ./update
-    - name: Setup Go
-      uses: actions/setup-go@v1
-    - name: Regenerate go files
-      run: go generate
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: auto update
-        title: Auto update
-        body: This is an auto-generated PR with updates from source lists.
+      - uses: actions/checkout@v2
+      - name: Execute Update
+        run: ./update
+      - name: Setup Go
+        uses: actions/setup-go@v1
+      - name: Regenerate go files
+        run: go generate
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: auto update
+          title: Auto update
+          body: This is an auto-generated PR with updates from source lists.
+          assignees: dpup
