@@ -34,8 +34,12 @@ func writeFile(name string, domains []string) {
 		"var " + name + " = map[string]bool{",
 	}
 	for _, domain := range domains {
+		// TODO: Temp fix to avoid bad names breaking generated code.
+		// Consider using something like https://pkg.go.dev/github.com/asaskevich/govalidator#IsDNSName
+		domain = strings.ReplaceAll(domain, `"`, ``)
+		domain = strings.ReplaceAll(domain, `\`, ``)
 		if domain != "" {
-			lines = append(lines, "	\""+domain+"\": true,")
+			lines = append(lines, `	"`+domain+`": true,`)
 		}
 	}
 	lines = append(lines, "}")
