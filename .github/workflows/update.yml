@@ -11,7 +11,9 @@ jobs:
       - name: Execute Update
         run: ./update
       - name: Setup Go
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v2
+        with:
+          go-version: "^1.16.2"
       - name: Regenerate go files
         run: go generate
       - name: Create Pull Request
