@@ -1,3 +1,4 @@
+//go:build ignore
 // +build ignore
 
 // This program generates free.go, disposable.go, and spammy.go
