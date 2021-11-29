@@ -1205,6 +1205,7 @@ dvd.dns-cloud.net
 dvd.dnsabr.com
 dvx.dnsabr.com
 dwp.net
+dwse.edu.pl
 dyceroprojects.com
 dygo.com
 dynamitemail.com
@@ -2311,6 +2312,7 @@ itelefonica.com.br
 itloox.com
 itmom.com
 itol.com
+itsme.edu.pl
 itunesgiftcodegenerator.com
 ivebeenframed.com
 iversen.dk
@@ -6240,6 +6242,7 @@ xwaretech.com
 xx-9.tk
 xxx.sytes.net
 xzapmail.com
+xzymoe.edu.pl
 y.bcb.ro
 y.email.ne.jp
 y59.jp
