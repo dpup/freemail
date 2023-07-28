@@ -52,6 +52,7 @@ cat $new_free \
 
 tmp=$(mktemp -t freemailXXX)
 cat $deduped ./data/free.txt \
+    | sed '/^$/d' \
     | sort \
     | uniq > $tmp
 mv $tmp ./data/free.txt
