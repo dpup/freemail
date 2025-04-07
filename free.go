@@ -6321,6 +6321,7 @@ var free = map[string]bool{
 	"wupics.com":                                 true,
 	"wwdg.com":                                   true,
 	"www.bccto.com":                              true,
+	"www.bccto.me":                               true,
 	"www.com":                                    true,
 	"www.dmtc.edu.pl":                            true,
 	"www.e4ward.com":                             true,
